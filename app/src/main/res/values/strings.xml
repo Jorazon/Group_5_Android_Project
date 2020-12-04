@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Group_5_Android_Project</string>
+    <string name="app_name">Group 5 Android Project</string>
+    <string name="addEntryContentDescription">Add calendar entry</string>
 </resources>
