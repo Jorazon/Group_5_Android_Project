@@ -1,6 +1,8 @@
 package com.example.group_5_android_project;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -15,12 +17,14 @@ public class MainActivity extends AppCompatActivity {
 
     EntryList entries;
 
-    CalendarView calendar;
+    CalendarView calendarView;
     ListView entryListView;
 
-    long calendarSelectedDate;
+    Calendar calendar = Calendar.getInstance();
 
     EntryAdapter adapter;
+
+    View noEntriesFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +32,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         entries = EntryList.getInstance();
-        calendar = findViewById(R.id.calendarView);
+        calendarView = findViewById(R.id.calendarView);
         entryListView = findViewById(R.id.list_entries);
-
-        calendarSelectedDate = calendar.getDate();
+        noEntriesFlag = findViewById(R.id.noentriesflag);
 
         for(int i = 0; i < 10; ++i){
-            entries.addEntry(new CalendarEntry(new EntryType[]{EntryType.RUOKA,EntryType.LIIKUNTA}[new Random().nextInt(2)] ,new Date(calendarSelectedDate),"test entry " + i));
+            entries.addEntry(new CalendarEntry(new EntryType[]{EntryType.RUOKA,EntryType.LIIKUNTA}[new Random().nextInt(2)] ,new Date(calendarView.getDate()),"testing 123...\n\n\n\n\ntest entry " + (i+1)));
         }
 
-        //set adapter for listview
+        //set adapter for list view
         adapter = new EntryAdapter(
                 this,
                 entries.getEntries()
@@ -45,18 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
         entryListView.setAdapter(adapter);
 
-        calendar.setOnDateChangeListener(
+        calendarView.setOnDateChangeListener(
                 (view, year, month, dayOfMonth) -> {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year,month,dayOfMonth-1);//jostain syystä pitää laittaa -1 että päivä osuu oikein
-                    setFilter(calendar.getTimeInMillis());
+                    calendar.set(year,month,dayOfMonth,0,0,0);
+                    adapter.filter(calendar.getTime().getTime());
+                    Log.d("count",Integer.toString(adapter.getCount()));
+                    noEntriesFlag.setVisibility((adapter.getCount() == 0) ? View.VISIBLE : View.INVISIBLE);
                 }
         );
     }
 
-    private void setFilter(long TimeInMillis){
-        calendarSelectedDate = TimeInMillis;
-        adapter.getFilter().filter(Long.toString(TimeInMillis));
-        findViewById(R.id.noentriesflag).setVisibility((entryListView.getCount() == 0) ? View.INVISIBLE : View.VISIBLE);
+    public void addEntry(View view){
+        startActivity(new Intent(this, AddEntry.class));
     }
 }

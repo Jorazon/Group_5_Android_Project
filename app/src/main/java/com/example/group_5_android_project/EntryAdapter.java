@@ -1,6 +1,7 @@
 package com.example.group_5_android_project;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 //https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
 
-public class EntryAdapter extends ArrayAdapter<CalendarEntry> implements Filterable {
+public class EntryAdapter extends ArrayAdapter<CalendarEntry> {
 
-    private final List<CalendarEntry> data;
-    private List<CalendarEntry> filtered;
+    private final ArrayList<CalendarEntry> data;
+    private ArrayList<CalendarEntry> filtered;
 
-    private EntryFilter filter;
-
-    public EntryAdapter(Context context, List<CalendarEntry> objects) {
+    public EntryAdapter(Context context, ArrayList<CalendarEntry> objects) {
         super(context, 0);
         data = objects;
         filtered = objects;
@@ -38,7 +38,7 @@ public class EntryAdapter extends ArrayAdapter<CalendarEntry> implements Filtera
     }
 
     public long getItemId(int position) {
-        return position;
+        return data.indexOf(filtered.get(position));
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -66,56 +66,24 @@ public class EntryAdapter extends ArrayAdapter<CalendarEntry> implements Filtera
         return convertView;
     }
 
-    @Override
-    public Filter getFilter() {
-        if(filter == null)
-        {
-            filter=new EntryFilter();
-        }
+    public void filter(long millis){
+        long dayMillis = 86400000;
 
-        return filter;
-    }
+        ArrayList<CalendarEntry> match = new ArrayList<>();
 
-    private class EntryFilter extends Filter {
+        for(CalendarEntry entry : data){
+            long entryTime = entry.getTime().getTime();
 
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults result = new FilterResults();
+            boolean after = entryTime > millis;
+            boolean before = entryTime < millis + dayMillis;
 
-            if(constraint != null && constraint.length()>0) {
-
-                ArrayList<CalendarEntry> resultingEntries = new ArrayList<>();
-
-                long msInDay = 86400000;
-
-                long date = Long.parseLong((String) constraint);
-
-                Date selected = new Date(date - 1);
-                Date selectedPlus1 = new Date(date + msInDay);
-
-                for (CalendarEntry entry : data) {
-                    Date time = entry.getTime();
-                    if(time.after(selected) && time.before(selectedPlus1)){
-                        resultingEntries.add(entry);
-                    }
-                }
-
-                result.count = resultingEntries.size();
-                result.values = resultingEntries;
+            if (before && after){
+                match.add(entry);
             }
-            else{
-                result.count = data.size();
-                result.values = data;
-            }
-
-            return result;
         }
 
-        @Override
-        @SuppressWarnings("unchecked")
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filtered = (List<CalendarEntry>) results.values;
-            notifyDataSetChanged();
-        }
+        filtered = match;
+
+        notifyDataSetChanged();
     }
 }
