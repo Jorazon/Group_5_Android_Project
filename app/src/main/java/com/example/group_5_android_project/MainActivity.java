@@ -46,11 +46,11 @@ public class MainActivity extends AppCompatActivity {
         entryListView.setAdapter(adapter);
 
         calendar.setOnDateChangeListener(
-            (view, year, month, dayOfMonth) -> {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year,month,dayOfMonth-1);//jostain syystä pitää laittaa -1 että päivä osuu oikein
-                setFilter(calendar.getTimeInMillis());
-            }
+                (view, year, month, dayOfMonth) -> {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year,month,dayOfMonth-1);//jostain syystä pitää laittaa -1 että päivä osuu oikein
+                    setFilter(calendar.getTimeInMillis());
+                }
         );
     }
 
