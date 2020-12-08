@@ -18,11 +18,11 @@
     <path
         android:pathData="M100,10 L100,190"
         android:strokeWidth="30"
-        android:strokeColor="#FFFF"
+        android:strokeColor="?colorOnPrimary"
         />
     <path
         android:pathData="M10,100 L190,100"
         android:strokeWidth="30"
-        android:strokeColor="#Ffff"
+        android:strokeColor="?colorOnPrimary"
         />
 </vector>
