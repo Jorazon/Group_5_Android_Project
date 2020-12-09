@@ -4,12 +4,13 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/app_label"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/Theme.Group_5_Android_Project"
-        android:fullBackupContent="">
+        android:supportsRtl="true"
+        >
         <activity
             android:name=".AddEntry"
             android:parentActivityName=".MainActivity"

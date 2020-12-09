@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Group 5 Android Project</string>
+    <string name="app_name">Activity tracker</string>
     <string name="addEntryContentDescription">Add calendar entry</string>
     <string name="description">Description</string>
     <string name="entry_type_food">Food</string>
@@ -7,4 +7,6 @@
     <string name="no_entries">No entries yet</string>
     <string name="entry_icon_content_description">entry icon</string>
     <string name="create_entry">Add Event</string>
+    <string name="app_label">My Activity</string>
+    <string name="no_empty_description">Description can\'t be empty.</string>
 </resources>

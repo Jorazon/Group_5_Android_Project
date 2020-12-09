@@ -1,13 +1,15 @@
 package com.example.group_5_android_project;
 
+import java.io.Serializable;
 import java.util.Date;
 
 enum EntryType {
     LIIKUNTA,
-    RUOKA
+    RUOKA,
+    UNDEF
 }
 
-public class CalendarEntry {
+public class CalendarEntry implements Comparable<CalendarEntry>, Serializable {
 
     private EntryType type;
     private Date time;
@@ -30,5 +32,10 @@ public class CalendarEntry {
     @Override
     public String toString(){
         return description;
+    }
+
+    @Override
+    public int compareTo(CalendarEntry o) {
+        return this.time.compareTo(o.time);
     }
 }
