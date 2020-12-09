@@ -13,7 +13,9 @@
         android:layout_height="0dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@+id/newEntryTime"
         app:layout_constraintEnd_toEndOf="@+id/newEntryTime"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/newEntryTime"
         app:layout_constraintTop_toTopOf="parent" />
 
