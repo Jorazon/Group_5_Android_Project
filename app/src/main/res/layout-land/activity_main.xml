@@ -8,24 +8,24 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:alpha=".1"
         android:contentDescription="@string/white_transparent_background"
-        app:layout_constraintBottom_toBottomOf="@+id/calendarView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/calendarView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/calendarView"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/screen_background_light" />
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fadingEdge="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/list_entries"
         app:layout_constraintEnd_toEndOf="@+id/list_entries"
         app:layout_constraintStart_toStartOf="@+id/list_entries"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toTopOf="@+id/list_entries" />
 
     <ListView
         android:id="@+id/list_entries"
@@ -62,9 +62,8 @@
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        app:layout_constraintStart_toEndOf="@+id/calendarView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/entryview">
 

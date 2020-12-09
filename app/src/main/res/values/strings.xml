@@ -9,4 +9,5 @@
     <string name="create_entry">Add Event</string>
     <string name="app_label">My Activity</string>
     <string name="no_empty_description">Description can\'t be empty.</string>
+    <string name="white_transparent_background">white transparent background</string>
 </resources>
