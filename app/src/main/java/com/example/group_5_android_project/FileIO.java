@@ -1,11 +1,13 @@
 package com.example.group_5_android_project;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 //https://developer.android.com/training/data-storage/app-specific
 //https://stackoverflow.com/questions/12158483/how-to-write-an-arraylist-to-file-and-retrieve-it
@@ -54,5 +56,27 @@ public class FileIO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Saves time to SharedPreferences.
+     * @param context passed activity context
+     * @param millis time in milliseconds
+     */
+    public static void saveMillis(Context context, long millis){
+        SharedPreferences preferences = context.getSharedPreferences("MyActivity", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("millis",millis);
+        editor.apply();
+    }
+
+    /**
+     * Loads time form SharedPreferences.
+     * @param context passed activity context
+     * @return loaded time epoch or current date if time hasn't been saved before
+     */
+    public static long loadMillis(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("MyActivity", Context.MODE_PRIVATE);
+        return preferences.getLong("millis", new Date().getTime());
     }
 }

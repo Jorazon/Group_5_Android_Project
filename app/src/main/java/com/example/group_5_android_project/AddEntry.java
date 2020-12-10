@@ -80,6 +80,9 @@ public class AddEntry extends AppCompatActivity {
             calendar.set(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth(),timePicker.getHour(),timePicker.getMinute());
         }
 
+        //save selected date to SharedPreferences
+        FileIO.saveMillis(this, calendar.getTimeInMillis());
+
         //create new CalendarEntry object
         CalendarEntry newEntry = new CalendarEntry(newEntryType,calendar.getTime(),description);
 

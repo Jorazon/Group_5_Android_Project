@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         CalendarView calendarView = findViewById(R.id.calendarView);
         ListView entryListView = findViewById(R.id.list_entries);
 
+        //set CalendarView date to one loaded form SharedPreferences or the default new Date
+        calendarView.setDate(FileIO.loadMillis(this));
+
         /*
         for(int i = 0; i < 3; ++i){
             //generate test entries
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 entries.getEntries()
         );
+
         entryListView.setAdapter(adapter);
 
         //set a OnDateChangeListener to update filter when user changes selected date on CalendarView
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Saves entries when the activity loses focus.
+     * Saves entries and selected date when the activity loses focus.
      */
     @Override
     protected void onPause(){
@@ -90,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         if(FileIO.saveToFile(this,entries.getEntries(),"CalendarEntries")){
             Log.d("loadEntries","saved");
         }
+
+        //save selected date to SharedPreferences
+        FileIO.saveMillis(this, calendar.getTimeInMillis());
     }
 
     /**
