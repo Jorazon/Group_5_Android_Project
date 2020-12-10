@@ -1,4 +1,5 @@
 <resources>
+    <!-- Author: Oskari Pahkala -->
     <string name="app_name">Activity tracker</string>
     <string name="addEntryContentDescription">Add calendar entry</string>
     <string name="description">Description</string>
