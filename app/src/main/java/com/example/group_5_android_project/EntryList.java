@@ -49,4 +49,13 @@ class EntryList {
     public void addAll(List<CalendarEntry> list){
         entries.addAll(list);
     }
+
+    /**
+     * Removes the entry at the specified position from the data set.
+     * @param position position of entry to be removed
+     * @return remoevd entry
+     */
+    public CalendarEntry removeEntry(long position){
+        return entries.remove((int) position);
+    }
 }

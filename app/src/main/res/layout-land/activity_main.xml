@@ -59,6 +59,7 @@
         android:id="@+id/list_entries"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:longClickable="true"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

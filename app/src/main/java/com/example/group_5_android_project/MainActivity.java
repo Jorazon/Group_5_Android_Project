@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     EntryList entries = EntryList.getInstance();
     EntryAdapter adapter;
+
+    long previousid = -2;
+    final int clicksToDelete = 3;
+    int clics = 0;
 
     /**
      * Loads entries at first start and sets the adapter for ListView and DateChangeListener for CalendarView.
@@ -60,12 +65,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //create and set adapter for list view
-        adapter = new EntryAdapter(
-                this,
-                entries.getEntries()
-        );
-
+        adapter = new EntryAdapter(this);
         entryListView.setAdapter(adapter);
+
+        //make an OnItemClickListener that removes an entry if it is long clicked
+        entryListView.setOnItemLongClickListener(
+            (parent, view, position, id) -> {
+                EntryList.getInstance().removeEntry(id);
+                adapter.notifyDataSetChanged();
+                adapter.filter(calendar.getTime().getTime());
+                setNoEntriesFlag();
+                FileIO.saveToFile(this,entries.getEntries(),"CalendarEntries");
+                return false;
+            }
+        );
 
         //set a OnDateChangeListener to update filter when user changes selected date on CalendarView
         calendarView.setOnDateChangeListener(
@@ -97,10 +110,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         //save entries to data storage when the activity loses focus
-        Log.d("loadEntries","attempting save");
-        if(FileIO.saveToFile(this,entries.getEntries(),"CalendarEntries")){
-            Log.d("loadEntries","saved");
-        }
+        FileIO.saveToFile(this,entries.getEntries(),"CalendarEntries");
     }
 
     /**

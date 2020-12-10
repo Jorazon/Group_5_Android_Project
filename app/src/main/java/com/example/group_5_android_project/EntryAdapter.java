@@ -23,17 +23,14 @@ import java.util.Locale;
  */
 public class EntryAdapter extends ArrayAdapter<CalendarEntry> {
 
-    private final ArrayList<CalendarEntry> data;//original passed data
     private ArrayList<CalendarEntry> filtered = new ArrayList<>();//filtered entries
 
     /**
      * Class constructor.
      * @param context passed context.
-     * @param objects data set to display
      */
-    public EntryAdapter(Context context, ArrayList<CalendarEntry> objects) {
+    public EntryAdapter(Context context) {
         super(context, 0);
-        data = objects;
     }
 
     /**
@@ -59,7 +56,7 @@ public class EntryAdapter extends ArrayAdapter<CalendarEntry> {
      * @return index of item in original data
      */
     public long getItemId(int position) {
-        return data.indexOf(filtered.get(position));
+        return EntryList.getInstance().getEntries().indexOf(filtered.get(position));
     }
 
     /**
@@ -126,7 +123,7 @@ public class EntryAdapter extends ArrayAdapter<CalendarEntry> {
         Calendar entrytime = Calendar.getInstance();
 
         //test filter on all entries to find matches
-        for(CalendarEntry entry : data){
+        for(CalendarEntry entry : EntryList.getInstance().getEntries()){
 
             //set the second Calendar instance to entry date
             entrytime.setTime(entry.getTime());
