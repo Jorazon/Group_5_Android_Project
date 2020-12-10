@@ -64,7 +64,7 @@ public class CalendarEntry implements Comparable<CalendarEntry>, Serializable {
     /**
      * Compares two {@link CalendarEntry} based on their time.
      * @param o comparable {@link CalendarEntry}
-     * @return 0 if the dates are equal, - if this is before param, + if this is after param
+     * @return 0 if the dates of this and param are equal, less than 0 if date of this is before param date, greater than 0 if date of this is after param date
      */
     @Override
     public int compareTo(CalendarEntry o) {
