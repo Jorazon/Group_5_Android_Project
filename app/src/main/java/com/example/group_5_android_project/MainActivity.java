@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,10 +22,6 @@ public class MainActivity extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     EntryList entries = EntryList.getInstance();
     EntryAdapter adapter;
-
-    long previousid = -2;
-    final int clicksToDelete = 3;
-    int clics = 0;
 
     /**
      * Loads entries at first start and sets the adapter for ListView and DateChangeListener for CalendarView.
