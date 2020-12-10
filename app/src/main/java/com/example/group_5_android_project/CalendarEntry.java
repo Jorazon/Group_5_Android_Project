@@ -11,9 +11,9 @@ enum EntryType {
 
 public class CalendarEntry implements Comparable<CalendarEntry>, Serializable {
 
-    private EntryType type;
-    private Date time;
-    private String description;
+    private final EntryType type;
+    private final Date time;
+    private final String description;
 
     public CalendarEntry(EntryType type, Date time, String description){
         this.type = type;

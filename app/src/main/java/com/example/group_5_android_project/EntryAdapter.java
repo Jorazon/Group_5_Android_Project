@@ -21,7 +21,6 @@ public class EntryAdapter extends ArrayAdapter<CalendarEntry> {
 
     private final ArrayList<CalendarEntry> data;//original passed data
     private ArrayList<CalendarEntry> filtered = new ArrayList<>();//filtered entries
-    private long dayMillis = 86400000;//milliseconds in 1 day
 
     public EntryAdapter(Context context, ArrayList<CalendarEntry> objects) {
         super(context, 0);
