@@ -12,19 +12,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * Main activity of the application.
+ * @author Oskari Pahkala
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     Calendar calendar = Calendar.getInstance();
     EntryList entries = EntryList.getInstance();
     EntryAdapter adapter;
 
+    /**
+     * Loads entries at first start and sets the adapter for ListView and DateChangeListener for CalendarView.
+     * @param savedInstanceState the activity's previously saved state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //set different title
         this.setTitle(R.string.app_name);
 
+        //get some references
         CalendarView calendarView = findViewById(R.id.calendarView);
         ListView entryListView = findViewById(R.id.list_entries);
 
@@ -35,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
         */
 
-        //load entries from data storage when app is opened
+        //load entries from data storage and add them to EntryList when app is opened (there are always 0 entries when app is first opened even if some have been added before)
         if (entries.getEntries().size() == 0) {
             @SuppressWarnings("unchecked")
             ArrayList<CalendarEntry> loaded = (ArrayList<CalendarEntry>) FileIO.readFromFile(this, "CalendarEntries");
@@ -45,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //set adapter for list view
+        //create and set adapter for list view
         adapter = new EntryAdapter(
                 this,
                 entries.getEntries()
         );
-
         entryListView.setAdapter(adapter);
 
+        //set a OnDateChangeListener to update filter when user changes selected date on CalendarView
         calendarView.setOnDateChangeListener(
                 (view, year, month, dayOfMonth) -> {
                     calendar.set(year,month,dayOfMonth,0,0,0);
@@ -61,27 +72,40 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        adapter.filter(calendarView.getDate());//fix all entries from showing when creating the activity
+        //filter entries to appear only for the selected date
+        adapter.filter(calendarView.getDate());
 
+        //update visibility of noentriesflag
         setNoEntriesFlag();
     }
 
+    /**
+     * Saves entries when the activity loses focus.
+     */
     @Override
     protected void onPause(){
         super.onPause();
-        //save entries to data storage when app is going to stop
+        //save entries to data storage when the activity loses focus
         Log.d("loadEntries","attempting save");
         if(FileIO.saveToFile(this,entries.getEntries(),"CalendarEntries")){
             Log.d("loadEntries","saved");
         }
     }
 
+    /**
+     * Starts {@link AddEntry} activity passing the selected date millisecond epoch from CalendarView in the Intent.
+     * @param view view reference from the view the method is attached to
+     */
     public void addEntry(View view){
+        //put selected date in millis as extra and start AddEntry activity
         Intent intent = new Intent(this, AddEntry.class);
         intent.putExtra("date", calendar.getTimeInMillis());
         startActivity(intent);
     }
 
+    /**
+     * Sets the visibility of noentriesflag based on adapter item count. Visible if count is 0 and invisible otherwise.
+     */
     private void setNoEntriesFlag(){
         findViewById(R.id.noentriesflag).setVisibility((adapter.getCount() == 0) ? View.VISIBLE : View.INVISIBLE);
     }
