@@ -70,9 +70,16 @@ public class MainActivity extends AppCompatActivity {
         //set a OnDateChangeListener to update filter when user changes selected date on CalendarView
         calendarView.setOnDateChangeListener(
                 (view, year, month, dayOfMonth) -> {
+
+                    //update filter
                     calendar.set(year,month,dayOfMonth,0,0,0);
                     adapter.filter(calendar.getTime().getTime());
+
+                    //update visibility of noentriesflag
                     setNoEntriesFlag();
+
+                    //save selected date to SharedPreferences
+                    FileIO.saveMillis(this, calendar.getTimeInMillis());
                 }
         );
 
@@ -84,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Saves entries and selected date when the activity loses focus.
+     * Saves entries when the activity loses focus.
      */
     @Override
     protected void onPause(){
@@ -94,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
         if(FileIO.saveToFile(this,entries.getEntries(),"CalendarEntries")){
             Log.d("loadEntries","saved");
         }
-
-        //save selected date to SharedPreferences
-        FileIO.saveMillis(this, calendar.getTimeInMillis());
     }
 
     /**
