@@ -3,4 +3,4 @@ TX00DJ95 Mobillit terveyssovellukset Project
 
 Simple activity tracker app for university Android programming course.
 
-![screenshot](Screenshot_20230108-155200_1.jpg)
+<img src="Screenshot_20230108-155200_1.jpg" alt="screenshot" width="33%">
